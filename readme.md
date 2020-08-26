@@ -2,6 +2,8 @@
 
 Location sharing is a map that allows the users to share their geolocations to friends and see each other on the map. The whole system has 3 main parts: Database, Python backend and web-page frontend.
 
+Click [here](https://maps.solidjerryc.com/locationlogin.html) to visit the website.
+
 ## 1. Database
 The database stores the current users who are sharing the locations. In order to support spatial data, I used PostgreSQL with PostGIS extension. The structure of the table is shown below, with following is the DDL code of the table. The Python code has access to the database.
 
