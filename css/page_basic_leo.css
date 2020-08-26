@@ -1,0 +1,59 @@
+body{
+    margin: 0px;
+    overflow:hidden;
+}
+
+#nav{
+	position: absolute;
+    height: 40px;
+    background-color: rgb(61, 110, 150);
+    border-radius: 2px
+    /* position: absolute; */
+}
+
+.tab-button{
+    float: left;
+    width: auto;
+    height: 22px;
+    border: none;
+    display: block;
+    outline: 0;
+    padding: 9px 10px 9px 15px !important;
+    color: white;
+    text-decoration: None;
+    border-radius: 2px
+}
+
+.tab-button:hover{
+    background-color: rgb(29, 53, 73);
+    border-radius: 2px
+}
+
+.tab-name-right{
+    float: right;
+    width: auto;
+    border: none;
+    display: block;
+    outline: 0;
+    padding: 9px 10px 9px 15px !important;
+    color: white;
+    text-decoration: None;
+    border-radius: 2px
+}
+
+.tab-button-right{
+    float: right;
+    width: auto;
+    border: none;
+    display: block;
+    outline: 0;
+    padding: 9px 10px 9px 15px !important;
+    color: white;
+    text-decoration: None;
+    border-radius: 2px
+}
+
+.tab-button-right:hover{
+    background-color: rgb(29, 53, 73);
+    border-radius: 2px
+}

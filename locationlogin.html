@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf8'>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+        <script src="scripts/cookies.js"></script>
+        <link rel="stylesheet" href="css/page_basic.css" type="text/css">
+        <link rel="stylesheet" href="css/loginpage.css" type="text/css">
+        <script>
+            // Change the size of the body automatically when user resize the window.
+            function changeTheSizeOfMap() {
+                var mapContainer = document.getElementById('body');
+                mapContainer.style.width = window.innerWidth.toString() + 'px';
+                mapContainer.style.height = (window.innerHeight).toString() + 'px';
+            }
+            window.onresize = changeTheSizeOfMap;
+        </script>
+    </head>
+    <body id='body' onload="changeTheSizeOfMap()">
+        <div id='nav'>
+            <!-- <a class="tab-button" href="index.html" title="Corona Map">Corona Map</a> -->
+            <a class="tab-button" href="locationlogin.html" title="Location Sharing">Location Sharing</a>
+        </div>
+        <script>
+            
+            var x = getCookie('user');
+            // If login cookie exists, redirect user to map page 
+            if(x!=""){
+                window.location.replace("realmap.html");
+            }
+            // Set cookie to save log in information
+            function setUser(){
+                var userName=document.getElementById('fname').value;
+                document.cookie="user="+userName+"; path=/";
+                window.location.replace("realmap.html");
+            }
+        </script>
+        <div id='main-body'>
+            <div style='color:white; margin: 20px;'>Type your name to share your location</div>
+            <input type="text" id="fname" name="fname">
+            <button onclick="setUser()">Share!</button>
+        </div>
+    </body>
+</html>

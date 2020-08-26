@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.2.1/css/ol.css" type="text/css">
+    
+    <link rel="stylesheet"
+        href="css/page_basic.css" type="text/css">
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.2.1/build/ol.js"></script>
+    <script src="scripts/cookies.js"></script>
+    <title>Find my friends</title>
+    <script>
+        // Read the cookie if the user logged in. If not, redirect user to log in page
+        if (getCookie("user") == "") {
+            window.location.replace("locationlogin.html");
+        }
+
+        // If user click the log out button, redirect user to the log in page and delete the cookie
+        function logOut() {
+            deleteCookie("user");
+            window.location.replace("locationlogin.html");
+        }
+
+        function setName() {
+            document.getElementById("username").innerText = getCookie("user");
+        }
+
+        // Change the size of the map container automatically when user resize the window.
+        function changeTheSizeOfMap() {
+            var mapContainer = document.getElementById('map');
+            mapContainer.style.width = window.innerWidth.toString() + 'px';
+            mapContainer.style.height = (window.innerHeight - 40).toString() + 'px';
+        }
+        window.onresize = changeTheSizeOfMap;
+    </script>
+</head>
+
+<body onload="setName()">
+    <div id='nav'>
+        <!-- <a class="tab-button" href="index.html" title="Corona Map">Corona Map</a> -->
+        <a class="tab-button" href="locationlogin.html" title="Location Sharing">Location Sharing</a>
+        <a class="tab-button-right" href="" onclick="logOut()"><svg t="1597128771533" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1071" width="20" height="20"><path d="M972.8 512l-307.2-256 0 153.6-358.4 0 0 204.8 358.4 0 0 153.6 307.2-256zM153.6 153.6l409.6 0 0-102.4-409.6 0c-56.32 0-102.4 46.08-102.4 102.4l0 716.8c0 56.32 46.08 102.4 102.4 102.4l409.6 0 0-102.4-409.6 0 0-716.8z" p-id="1072" data-spm-anchor-id="a313x.7781069.0.i0" class="selected" fill="#ffffff"></path></svg></a>
+        <div id='username' class="tab-name-right"></div>
+    </div>
+    <div id="map" class="map"></div>
+    <div id="locate-bar">
+        <div class="locate-button" onclick="getCurrentUsers()">
+            <a href="#popup1">
+                <svg t="1597139676200" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3500" width="30" height="30"><path d="M662.635 460.563q0-87.1-61.912-149.013t-149.013-61.912-149.013 61.912-61.912 149.013 61.912 149.013 149.013 61.912 149.013-61.912 61.912-149.013zM903.69 852.278q0 24.482-17.891 42.373t-42.373 17.891q-25.424 0-42.373-17.891l-161.488-161.017q-84.276 58.381-187.853 58.381-67.326 0-128.768-26.13t-105.933-70.622-70.622-105.933-26.13-128.768 26.13-128.768 70.622-105.933 105.933-70.622 128.768-26.13 128.767 26.13 105.933 70.622 70.622 105.933 26.13 128.768q0 103.578-58.381 187.853l161.488 161.488q17.421 17.421 17.421 42.373z" p-id="3501" fill="#ffffff"></path></svg>
+            </a>
+        </div>
+        <div style="height: 2px;"></div>
+        <div class="locate-button" onclick="locateMe()">
+            <svg t="1597132618930" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1552" width="30" height="30"><path d="M512 511.97742m-148.169526 0a148.169526 148.169526 0 1 0 296.339052 0 148.169526 148.169526 0 1 0-296.339052 0Z" p-id="1553" fill="#ffffff"></path><path d="M868.153297 466.817552C847.695877 304.829107 719.193473 176.304123 557.159868 155.846703V74.694421h-90.319736v81.174862C304.829107 176.304123 176.304123 304.829107 155.846703 466.817552H74.694421v90.319736h81.152282c20.45742 162.033605 148.982404 290.536009 310.993429 310.993429v81.152282h90.319736v-81.152282c162.033605-20.45742 290.536009-148.982404 310.993429-310.993429h81.152282v-90.319736h-81.152282zM512 799.036119c-158.262756 0-287.036119-128.773363-287.036119-287.036119 0-158.285336 128.773363-287.036119 287.036119-287.036119 158.285336 0 287.058699 128.773363 287.058699 287.036119 0 158.262756-128.773363 287.036119-287.058699 287.036119z" p-id="1554" fill="#ffffff"></path></svg>
+        </div>
+        <div class="locate-button" onclick="fitLayerExtent()">
+            <svg t="1597133600162" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2639" width="30" height="30"><path d="M661.333333 554.666667H554.666667v106.666666a21.333333 21.333333 0 0 1-21.333334 21.333334h-42.666666a21.333333 21.333333 0 0 1-21.333334-21.333334V554.666667H362.666667a21.333333 21.333333 0 0 1-21.333334-21.333334v-42.666666a21.333333 21.333333 0 0 1 21.333334-21.333334H469.333333V362.666667a21.333333 21.333333 0 0 1 21.333334-21.333334h42.666666a21.333333 21.333333 0 0 1 21.333334 21.333334V469.333333h106.666666a21.333333 21.333333 0 0 1 21.333334 21.333334v42.666666a21.333333 21.333333 0 0 1-21.333334 21.333334z m-512-170.666667h42.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V213.333333h149.333334a21.333333 21.333333 0 0 0 21.333333-21.333333v-42.666667a21.333333 21.333333 0 0 0-21.333333-21.333333H213.333333a85.333333 85.333333 0 0 0-85.333333 85.333333v149.333334a21.333333 21.333333 0 0 0 21.333333 21.333333z m213.333334 426.666667H213.333333v-149.333334a21.333333 21.333333 0 0 0-21.333333-21.333333h-42.666667a21.333333 21.333333 0 0 0-21.333333 21.333333V810.666667a85.333333 85.333333 0 0 0 85.333333 85.333333h149.333334a21.333333 21.333333 0 0 0 21.333333-21.333333v-42.666667a21.333333 21.333333 0 0 0-21.333333-21.333333zM810.666667 128h-149.333334a21.333333 21.333333 0 0 0-21.333333 21.333333v42.666667a21.333333 21.333333 0 0 0 21.333333 21.333333H810.666667v149.333334a21.333333 21.333333 0 0 0 21.333333 21.333333h42.666667a21.333333 21.333333 0 0 0 21.333333-21.333333V213.333333a85.333333 85.333333 0 0 0-85.333333-85.333333z m64 512h-42.666667a21.333333 21.333333 0 0 0-21.333333 21.333333V810.666667h-149.333334a21.333333 21.333333 0 0 0-21.333333 21.333333v42.666667a21.333333 21.333333 0 0 0 21.333333 21.333333H810.666667a85.333333 85.333333 0 0 0 85.333333-85.333333v-149.333334a21.333333 21.333333 0 0 0-21.333333-21.333333z" p-id="2640" fill="#ffffff"></path></svg>
+        </div>
+    </div>
+
+    <div id="popup1" class="overlay">
+        <div class="popup">
+            <h2>My friends</h2>
+            <a class="close" href="#">&times;</a>
+            <div id="user-list" class="content">
+            </div>
+    </div>
+    <script type="text/javascript" src='scripts/realmap.js'></script>
+    
+</body>
+
+</html>
